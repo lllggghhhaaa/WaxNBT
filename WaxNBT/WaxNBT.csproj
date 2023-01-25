@@ -5,6 +5,14 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>11</LangVersion>
+        <Version>0.1.0</Version>
+        <Title>WaxNBT</Title>
+        <Authors>lllggghhhaaa</Authors>
+        <Description>A library to create and edit NBT files</Description>
+        <PackageLicenseUrl>https://licenses.nuget.org/Apache-2.0</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/lllggghhhaaa/WaxNBT</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageTags>NBT</PackageTags>
     </PropertyGroup>
 
 </Project>
