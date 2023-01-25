@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaxNBT", "WaxNBT\WaxNBT.csproj", "{441F247D-B065-41FF-A4EB-7B0B481498BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaxNBT.Tests", "WaxNBT.Tests\WaxNBT.Tests.csproj", "{EB908860-F8D9-4BBF-AD47-6DA7FDEE7180}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{441F247D-B065-41FF-A4EB-7B0B481498BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{441F247D-B065-41FF-A4EB-7B0B481498BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{441F247D-B065-41FF-A4EB-7B0B481498BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{441F247D-B065-41FF-A4EB-7B0B481498BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB908860-F8D9-4BBF-AD47-6DA7FDEE7180}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB908860-F8D9-4BBF-AD47-6DA7FDEE7180}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB908860-F8D9-4BBF-AD47-6DA7FDEE7180}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB908860-F8D9-4BBF-AD47-6DA7FDEE7180}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
