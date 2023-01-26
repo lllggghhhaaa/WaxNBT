@@ -22,4 +22,12 @@ public class NbtReaderTests
 
         _reader = new NbtReader(stream);
     }
+    
+    [Fact]
+    public void TestTagType()
+    {
+        NbtTagType tagType = _reader.ReadTagType();
+        
+        Assert.Equal(NbtTagType.Byte, tagType);
+    }
 }
