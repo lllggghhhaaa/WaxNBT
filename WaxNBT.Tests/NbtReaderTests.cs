@@ -75,4 +75,13 @@ public class NbtReaderTests
         
         Assert.Equal(4, result);
     }
+
+    [Fact]
+    public void TestLong()
+    {
+        _reader.Skip(22);
+        long result = _reader.ReadLong();
+        
+        Assert.Equal(8, result);
+    }
 }
