@@ -66,4 +66,13 @@ public class NbtReaderTests
         
         Assert.Equal(4.1f, result);
     }
+    
+    [Fact]
+    public void TestInt()
+    {
+        _reader.Skip(18);
+        int result = _reader.ReadInt();
+        
+        Assert.Equal(4, result);
+    }
 }
