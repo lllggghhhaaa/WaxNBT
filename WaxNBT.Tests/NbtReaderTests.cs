@@ -48,4 +48,13 @@ public class NbtReaderTests
         
         Assert.Equal(new byte[] { 1, 2, 3, 4 }, result);
     }
+
+    [Fact]
+    public void TestDouble()
+    {
+        _reader.Skip(6);
+        double result = _reader.ReadDouble();
+        
+        Assert.Equal(8.2d, result);
+    }
 }
