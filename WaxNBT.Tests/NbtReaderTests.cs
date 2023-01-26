@@ -30,4 +30,12 @@ public class NbtReaderTests
         
         Assert.Equal(NbtTagType.Byte, tagType);
     }
+
+    [Fact]
+    public void TestByte()
+    {
+        byte result = _reader.ReadByte();
+        
+        Assert.Equal((byte)1, result);
+    }
 }
