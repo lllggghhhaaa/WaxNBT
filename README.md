@@ -6,4 +6,4 @@ A library to create and edit NBT files
 > - [x] Edit and create tags
 > - [ ] Parse NBT files
 
-[Example](https://github.com/lllggghhhaaa/WaxNBT/blob/master/WaxNBT.Tests/Program.cs)
+[Example](https://github.com/lllggghhhaaa/WaxNBT/blob/master/WaxNBT.Examples/Program.cs)
