@@ -84,4 +84,13 @@ public class NbtReaderTests
         
         Assert.Equal(8, result);
     }
+
+    [Fact]
+    public void TestShort()
+    {
+        _reader.Skip(30);
+        short result = _reader.ReadShort();
+        
+        Assert.Equal((short)2, result);
+    }
 }
