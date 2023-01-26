@@ -2,8 +2,24 @@ namespace WaxNBT.Tests;
 
 public class NbtReaderTests
 {
-    [Fact]
-    public void Test1()
+    private NbtReader _reader;
+    
+    public NbtReaderTests()
     {
+        NbtWriter writer = new NbtWriter();
+        writer.Write(NbtTagType.Byte);
+        writer.Write((byte)1);
+        writer.Write(new byte[] { 1, 2, 3, 4 });
+        writer.Write(8.2d);
+        writer.Write(4.1f);
+        writer.Write(4);
+        writer.Write(8L);
+        writer.Write((short)2);
+        writer.Write("Ceira");
+
+        Stream stream = writer.GetStream();
+        stream.Position = 0;
+
+        _reader = new NbtReader(stream);
     }
 }
