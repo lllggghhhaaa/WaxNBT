@@ -7,7 +7,7 @@ public class NbtReaderTests
     public NbtReaderTests()
     {
         NbtWriter writer = new NbtWriter();
-        writer.Write(NbtTagType.Byte);
+        writer.Write(NbtTagType.Int);
         writer.Write((byte)2);
         writer.Write(new byte[] { 1, 2, 3, 4 });
         writer.Write(8.2d);
@@ -28,12 +28,13 @@ public class NbtReaderTests
     {
         NbtTagType tagType = _reader.ReadTagType();
         
-        Assert.Equal(NbtTagType.Byte, tagType);
+        Assert.Equal(NbtTagType.Int, tagType);
     }
 
     [Fact]
     public void TestByte()
     {
+        _reader.Skip(1);
         byte result = _reader.ReadByte();
         
         Assert.Equal((byte)2, result);
@@ -42,6 +43,7 @@ public class NbtReaderTests
     [Fact]
     public void TestByteArray()
     {
+        _reader.Skip(2);
         byte[] result = _reader.ReadArray(4);
         
         Assert.Equal(new byte[] { 1, 2, 3, 4 }, result);
