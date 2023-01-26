@@ -93,4 +93,13 @@ public class NbtReaderTests
         
         Assert.Equal((short)2, result);
     }
+
+    [Fact]
+    public void TestString()
+    {
+        _reader.Skip(32);
+        string result = _reader.ReadString();
+        
+        Assert.Equal("Ceira", result);
+    }
 }
