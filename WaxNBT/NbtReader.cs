@@ -7,13 +7,28 @@ public class NbtReader
 {
     public Encoding StringEncoder = Encoding.UTF8;
 
-    private readonly MemoryStream _stream = new();
-    
-    public void Write(NbtTagType type) => Write((byte)type);
-    
-    public void Write(byte value) => _stream.WriteByte(value);
+    private readonly MemoryStream _stream;
 
-    public void Write(byte[] data) => _stream.Write(data);
+    public NbtReader(Stream stream)
+    {
+        _stream = new MemoryStream();
+        stream.CopyTo(_stream);
+        _stream.Position = 0;
+    }
+
+    public NbtReader(byte[] data) => _stream = new MemoryStream(data);
+
+    public NbtTagType ReadTagType() => (NbtTagType)ReadByte();
+
+    public byte ReadByte() => (byte)_stream.ReadByte();
+
+    public byte[] ReadArray(int lenght)
+    {
+        byte[] data = new byte[lenght];
+        int read = _stream.Read(data);
+
+        return data;
+    }
     
     public short ReadShort()
     {
