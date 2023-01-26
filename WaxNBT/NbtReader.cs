@@ -7,54 +7,60 @@ public class NbtReader
 {
     public Encoding StringEncoder = Encoding.UTF8;
 
-    private readonly MemoryStream _stream;
+    private readonly byte[] _data;
+    private int _position;
 
     public NbtReader(Stream stream)
     {
-        _stream = new MemoryStream();
-        stream.CopyTo(_stream);
-        _stream.Position = 0;
+        MemoryStream ms = new MemoryStream();
+        stream.CopyTo(ms);
+
+        _data = ms.ToArray();
     }
 
-    public NbtReader(byte[] data) => _stream = new MemoryStream(data);
+    public NbtReader(byte[] data) => _data = data;
 
+    public void Skip(int lenght) => _position += lenght;
+    
     public NbtTagType ReadTagType() => (NbtTagType)ReadByte();
 
-    public byte ReadByte() => (byte)_stream.ReadByte();
+    public byte ReadByte()
+    {
+        byte data = _data[_position];
+        _position++;
+
+        return data;
+    }
 
     public byte[] ReadArray(int lenght)
     {
-        byte[] data = new byte[lenght];
-        int read = _stream.Read(data);
-
+        byte[] data = _data[_position..(_position + lenght)];
+        _position += lenght;
+        
         return data;
     }
     
     public short ReadShort()
     {
-        byte[] data = new byte[2];
-        int read = _stream.Read(data);
+        byte[] data = ReadArray(2);
         return BinaryPrimitives.ReadInt16BigEndian(data);
     }
 
     public int ReadInt()
     {
-        byte[] data = new byte[4];
-        int read = _stream.Read(data);
+        byte[] data = ReadArray(4);
         return BinaryPrimitives.ReadInt32BigEndian(data);
     }
 
     public long ReadLong()
     {
-        byte[] data = new byte[8];
-        int read = _stream.Read(data);
+        byte[] data = ReadArray(8);
         return BinaryPrimitives.ReadInt64BigEndian(data);
     }
     
     public float ReadFloat()
     {
-        byte[] data = new byte[4];
-        int read = _stream.Read(data);
+        byte[] data = ReadArray(4);
         
         Array.Reverse(data);
         return BitConverter.ToSingle(data);
@@ -62,8 +68,7 @@ public class NbtReader
     
     public double ReadDouble()
     {
-        byte[] data = new byte[8];
-        int read = _stream.Read(data);
+        byte[] data = ReadArray(8);
         
         Array.Reverse(data);
         return BitConverter.ToDouble(data);
@@ -73,11 +78,8 @@ public class NbtReader
     {
         short lenght = ReadShort();
 
-        byte[] data = new byte[lenght];
-        int read = _stream.Read(data);
+        byte[] data = ReadArray(lenght);
 
         return StringEncoder.GetString(data);
     }
-    
-    public Stream GetStream() => _stream;
 }
