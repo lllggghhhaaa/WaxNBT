@@ -44,3 +44,12 @@ stream.CopyTo(fs);
 
 stream.Close();
 fs.Close();
+
+NbtFile readFile = NbtFile.Parse(File.ReadAllBytes("ceira.nbt"));
+
+Console.WriteLine(readFile.Root.Name);
+foreach (NbtTag child in readFile.Root.Children)
+{
+    Console.WriteLine(child.Name);
+    Console.WriteLine(child.GetType());
+}
