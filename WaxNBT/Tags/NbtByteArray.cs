@@ -4,18 +4,19 @@ public class NbtByteArray : NbtTag
 {
     public byte[] Data;
 
-    public NbtByteArray(byte[] data) => Data = data;
-
-    public NbtByteArray(string name, byte[] data)
+    public NbtByteArray(byte[] data, string? name = null)
     {
         Name = name;
         Data = data;
     }
 
-    public NbtByteArray(byte[] data, string? name = null)
+    public static NbtByteArray FromReader(NbtReader reader, bool readName = true)
     {
-        Name = name;
-        Data = data;
+        string? name = readName ? reader.ReadString() : null;
+        int lenght = reader.ReadInt();
+        byte[] data = reader.ReadArray(lenght);
+
+        return new NbtByteArray(data, name);
     }
 
     internal override void SerializeValue(ref NbtWriter writer)

@@ -9,14 +9,11 @@ public class NbtFile
 
     public NbtFile(string rootName = "") => Root = new NbtCompound(rootName);
 
-    public void Parse(Stream stream) => Parse(new NbtReader(stream));
+    public static NbtFile Parse(Stream stream) => Parse(new NbtReader(stream));
 
-    public void Parse(byte[] data) => Parse(new NbtReader(data));
+    public static NbtFile Parse(byte[] data) => Parse(new NbtReader(data));
 
-    public void Parse(NbtReader reader)
-    {
-        throw new NotImplementedException();
-    }
+    public static NbtFile Parse(NbtReader reader) => new() { Root = (NbtCompound)reader.ReadTag() };
 
     public Stream Serialize()
     {

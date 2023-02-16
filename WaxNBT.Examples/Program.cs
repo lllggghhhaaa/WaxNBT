@@ -7,22 +7,22 @@ NbtCompound numbers = new NbtCompound("numbers");
 NbtCompound texts = new NbtCompound("texts");
 NbtCompound arrays = new NbtCompound("arrays");
 
-numbers.Add(new NbtByte("byte", 8));
-numbers.Add(new NbtShort("short", 16));
-numbers.Add(new NbtInt("int", 32));
-numbers.Add(new NbtLong("long", 64));
-numbers.Add(new NbtFloat("float", 32.1f));
-numbers.Add(new NbtDouble("double", 64.2d));
+numbers.Add(new NbtByte(8, "byte"));
+numbers.Add(new NbtShort(16, "short"));
+numbers.Add(new NbtInt(32, "int"));
+numbers.Add(new NbtLong(64, "long"));
+numbers.Add(new NbtFloat(32.1f, "float"));
+numbers.Add(new NbtDouble(64.2d, "double"));
 
-texts.Add(new NbtString("first", "ceira"));
-texts.Add(new NbtString("second", "pura"));
-texts.Add(new NbtString("third", "sinas"));
+texts.Add(new NbtString("ceira", "first"));
+texts.Add(new NbtString("pura", "second"));
+texts.Add(new NbtString("sinas", "third"));
 
-arrays.Add(new NbtByteArray("bytes", new byte[] { 9, 99 }));
-arrays.Add(new NbtIntArray("ints", new[] { 9, 99, 999, 9999 }));
-arrays.Add(new NbtLongArray("longs", new long[] { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999 }));
+arrays.Add(new NbtByteArray(new byte[] { 9, 99 }, "bytes"));
+arrays.Add(new NbtIntArray(new[] { 9, 99, 999, 9999 }, "ints"));
+arrays.Add(new NbtLongArray(new long[] { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999 }, "longs"));
 
-NbtList<NbtString> list = new NbtList<NbtString>("list");
+NbtList list = new NbtList("list");
 list.Data.AddRange(new []
 {
     new NbtString("pessoa"),

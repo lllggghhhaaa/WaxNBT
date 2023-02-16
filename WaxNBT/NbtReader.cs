@@ -1,5 +1,6 @@
 using System.Buffers.Binary;
 using System.Text;
+using WaxNBT.Tags;
 
 namespace WaxNBT;
 
@@ -23,6 +24,30 @@ public class NbtReader
     public void Skip(int lenght) => _position += lenght;
     
     public NbtTagType ReadTagType() => (NbtTagType)ReadByte();
+
+    public NbtTag ReadTag(NbtTagType? type = null, bool readName = true)
+    {
+        type ??= ReadTagType();
+
+        return type switch
+        {
+            NbtTagType.End => NbtEnd.FromReader(this, readName),
+            NbtTagType.Byte => NbtByte.FromReader(this, readName),
+            NbtTagType.Short => NbtShort.FromReader(this, readName),
+            NbtTagType.Int => NbtInt.FromReader(this, readName),
+            NbtTagType.Long => NbtLong.FromReader(this, readName),
+            NbtTagType.Float => NbtFloat.FromReader(this, readName),
+            NbtTagType.Double => NbtDouble.FromReader(this, readName),
+            NbtTagType.ByteArray => NbtByteArray.FromReader(this, readName),
+            NbtTagType.String => NbtString.FromReader(this, readName),
+            NbtTagType.List => NbtList.FromReader(this, readName),
+            NbtTagType.Compound => NbtCompound.FromReader(this, readName),
+            NbtTagType.IntArray => NbtIntArray.FromReader(this, readName),
+            NbtTagType.LongArray => NbtLongArray.FromReader(this, readName),
+            null => NbtEnd.FromReader(this, readName),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+    }
 
     public byte ReadByte()
     {
