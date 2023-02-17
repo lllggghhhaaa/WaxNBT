@@ -4,7 +4,9 @@ public class NbtIntArray : NbtTag
 {
     public int[] Data;
 
-    public NbtIntArray(int[] data, string? name = null)
+    public NbtIntArray(int[] data) => Data = data;
+    
+    public NbtIntArray(string? name, int[] data)
     {
         Name = name;
         Data = data;
@@ -20,7 +22,7 @@ public class NbtIntArray : NbtTag
         for (int i = 0; i < lenght; i++)
             data[i] = reader.ReadInt();
 
-        return new NbtIntArray(data, name);
+        return new NbtIntArray(name, data);
     }
 
     internal override void SerializeValue(ref NbtWriter writer)

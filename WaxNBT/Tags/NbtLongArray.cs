@@ -4,7 +4,9 @@ public class NbtLongArray : NbtTag
 {
     public long[] Data;
 
-    public NbtLongArray(long[] data, string? name = null)
+    public NbtLongArray(long[] data) => Data = data;
+    
+    public NbtLongArray(string? name, long[] data)
     {
         Name = name;
         Data = data;
@@ -20,7 +22,7 @@ public class NbtLongArray : NbtTag
         for (int i = 0; i < lenght; i++)
             data[i] = reader.ReadLong();
 
-        return new NbtLongArray(data, name);
+        return new NbtLongArray(name, data);
     }
 
     internal override void SerializeValue(ref NbtWriter writer)

@@ -4,7 +4,7 @@ public class NbtList : NbtTag
 {
     public List<NbtTag> Data = new();
 
-    public NbtList(string? name = null) => Name = name;
+    public NbtList(string? name) => Name = name;
 
     public static NbtList FromReader(NbtReader reader, bool readName = true)
     {

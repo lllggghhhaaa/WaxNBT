@@ -3,8 +3,10 @@ namespace WaxNBT.Tags;
 public class NbtString : NbtTag
 {
     public string Value;
+
+    public NbtString(string value) => Value = value;
     
-    public NbtString(string value = "", string? name = null)
+    public NbtString(string? name, string value)
     {
         Name = name;
         Value = value;
@@ -15,7 +17,7 @@ public class NbtString : NbtTag
         string? name = readName ? reader.ReadString() : null;
         string value = reader.ReadString();
 
-        return new NbtString(value, name);
+        return new NbtString(name, value);
     }
     
     internal override void SerializeValue(ref NbtWriter writer) => writer.Write(Value);

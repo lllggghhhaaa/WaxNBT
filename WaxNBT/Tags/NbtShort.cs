@@ -4,7 +4,9 @@ public class NbtShort : NbtTag
 {
     public short Value;
 
-    public NbtShort(short value = 0, string? name = null)
+    public NbtShort(short value) => Value = value;
+    
+    public NbtShort(string? name, short value)
     {
         Name = name;
         Value = value;
@@ -15,7 +17,7 @@ public class NbtShort : NbtTag
         string? name = readName ? reader.ReadString() : null;
         short value = reader.ReadShort();
 
-        return new NbtShort(value, name);
+        return new NbtShort(name, value);
     }
     
     internal override void SerializeValue(ref NbtWriter writer) => writer.Write(Value);

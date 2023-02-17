@@ -31,7 +31,7 @@ public class NbtReader
 
         return type switch
         {
-            NbtTagType.End => NbtEnd.FromReader(this, readName),
+            NbtTagType.End => NbtEnd.FromReader(),
             NbtTagType.Byte => NbtByte.FromReader(this, readName),
             NbtTagType.Short => NbtShort.FromReader(this, readName),
             NbtTagType.Int => NbtInt.FromReader(this, readName),
@@ -44,7 +44,7 @@ public class NbtReader
             NbtTagType.Compound => NbtCompound.FromReader(this, readName),
             NbtTagType.IntArray => NbtIntArray.FromReader(this, readName),
             NbtTagType.LongArray => NbtLongArray.FromReader(this, readName),
-            null => NbtEnd.FromReader(this, readName),
+            null => NbtEnd.FromReader(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
     }

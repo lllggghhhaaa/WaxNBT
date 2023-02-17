@@ -4,7 +4,9 @@ public class NbtLong : NbtTag
 {
     public long Value;
 
-    public NbtLong(long value = 0, string? name = null)
+    public NbtLong(long value) => Value = value;
+    
+    public NbtLong(string? name, long value)
     {
         Name = name;
         Value = value;
@@ -15,7 +17,7 @@ public class NbtLong : NbtTag
         string? name = readName ? reader.ReadString() : null;
         long value = reader.ReadLong();
 
-        return new NbtLong(value, name);
+        return new NbtLong(name, value);
     }
 
     internal override void SerializeValue(ref NbtWriter writer) => writer.Write(Value);

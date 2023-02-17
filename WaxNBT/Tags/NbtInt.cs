@@ -4,7 +4,9 @@ public class NbtInt : NbtTag
 {
     public int Value;
 
-    public NbtInt(int value = 0, string? name = null)
+    public NbtInt(int value) => Value = value;
+    
+    public NbtInt(string? name, int value)
     {
         Name = name;
         Value = value;
@@ -15,7 +17,7 @@ public class NbtInt : NbtTag
         string? name = readName ? reader.ReadString() : null;
         int value = reader.ReadInt();
 
-        return new NbtInt(value, name);
+        return new NbtInt(name, value);
     }
 
     internal override void SerializeValue(ref NbtWriter writer) => writer.Write(Value);
