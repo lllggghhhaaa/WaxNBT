@@ -4,7 +4,7 @@ public class NbtCompound : NbtTag
 {
     public List<NbtTag> Children = new();
     
-    public NbtCompound(string? name) => Name = name;
+    public NbtCompound(string? name = null) => Name = name;
 
     public void Add(NbtTag tag) => Children.Add(tag);
 
