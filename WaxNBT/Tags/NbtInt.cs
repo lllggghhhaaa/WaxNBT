@@ -12,6 +12,9 @@ public class NbtInt : NbtTag
         Value = value;
     }
 
+    public static implicit operator NbtInt(int value) => new(value);
+    public static implicit operator int(NbtInt tag) => tag.Value;
+
     public static NbtInt FromReader(NbtReader reader, bool readName = true)
     {
         string? name = readName ? reader.ReadString() : null;

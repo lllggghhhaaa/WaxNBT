@@ -11,6 +11,9 @@ public class NbtByte : NbtTag
         Name = name;
         Value = value;
     }
+    
+    public static implicit operator NbtByte(byte value) => new(value);
+    public static implicit operator byte(NbtByte tag) => tag.Value;
 
     public static NbtByte FromReader(NbtReader reader, bool readName = true)
     {

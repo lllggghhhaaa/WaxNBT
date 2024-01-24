@@ -11,6 +11,9 @@ public class NbtString : NbtTag
         Name = name;
         Value = value;
     }
+    
+    public static implicit operator NbtString(string value) => new(value);
+    public static implicit operator string(NbtString tag) => tag.Value;
 
     public static NbtString FromReader(NbtReader reader, bool readName = true)
     {

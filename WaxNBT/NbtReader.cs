@@ -21,7 +21,7 @@ public class NbtReader
 
     public NbtReader(byte[] data) => _data = data;
 
-    public void Skip(int lenght) => _position += lenght;
+    public void Skip(int length) => _position += length;
     
     public NbtTagType ReadTagType() => (NbtTagType)ReadByte();
 
@@ -57,10 +57,10 @@ public class NbtReader
         return data;
     }
 
-    public byte[] ReadArray(int lenght)
+    public byte[] ReadArray(int length)
     {
-        byte[] data = _data[_position..(_position + lenght)];
-        _position += lenght;
+        byte[] data = _data[_position..(_position + length)];
+        _position += length;
         
         return data;
     }
@@ -101,9 +101,9 @@ public class NbtReader
 
     public string ReadString()
     {
-        short lenght = ReadShort();
+        short length = ReadShort();
 
-        byte[] data = ReadArray(lenght);
+        byte[] data = ReadArray(length);
 
         return StringEncoder.GetString(data);
     }

@@ -11,6 +11,9 @@ public class NbtLong : NbtTag
         Name = name;
         Value = value;
     }
+    
+    public static implicit operator NbtLong(long value) => new(value);
+    public static implicit operator long(NbtLong tag) => tag.Value;
 
     public static NbtLong FromReader(NbtReader reader, bool readName = true)
     {

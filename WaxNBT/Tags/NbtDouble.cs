@@ -11,6 +11,9 @@ public class NbtDouble : NbtTag
         Name = name;
         Value = value;
     }
+    
+    public static implicit operator NbtDouble(double value) => new(value);
+    public static implicit operator double(NbtDouble tag) => tag.Value;
 
     public static NbtDouble FromReader(NbtReader reader, bool readName = true)
     {

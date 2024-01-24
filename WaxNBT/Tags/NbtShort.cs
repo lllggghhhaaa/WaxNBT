@@ -11,6 +11,9 @@ public class NbtShort : NbtTag
         Name = name;
         Value = value;
     }
+    
+    public static implicit operator NbtShort(short value) => new(value);
+    public static implicit operator short(NbtShort tag) => tag.Value;
 
     public static NbtShort FromReader(NbtReader reader, bool readName = true)
     {

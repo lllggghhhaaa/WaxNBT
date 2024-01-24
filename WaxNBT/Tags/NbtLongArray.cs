@@ -12,6 +12,9 @@ public class NbtLongArray : NbtTag
         Data = data;
     }
     
+    public static implicit operator NbtLongArray(long[] data) => new(data);
+    public static implicit operator long[](NbtLongArray tag) => tag.Data;
+    
     public static NbtLongArray FromReader(NbtReader reader, bool readName = true)
     {
         string? name = readName ? reader.ReadString() : null;

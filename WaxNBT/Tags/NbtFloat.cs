@@ -11,6 +11,9 @@ public class NbtFloat : NbtTag
         Name = name;
         Value = value;
     }
+    
+    public static implicit operator NbtFloat(float value) => new(value);
+    public static implicit operator float(NbtFloat tag) => tag.Value;
 
     public static NbtFloat FromReader(NbtReader reader, bool readName = true)
     {

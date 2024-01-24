@@ -22,8 +22,7 @@ arrays.Add(new NbtByteArray("bytes", new byte[] { 9, 99 }));
 arrays.Add(new NbtIntArray("ints", new[] { 9, 99, 999, 9999 }));
 arrays.Add(new NbtLongArray("longs", new long[] { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999 }));
 
-NbtList list = new NbtList("list");
-list.Data.AddRange(new []
+var list = new NbtList
 {
     new NbtString("pessoa"),
     new NbtString("de"),
@@ -31,7 +30,7 @@ list.Data.AddRange(new []
     new NbtString("cheia"),
     new NbtString("de"),
     new NbtString("ceira")
-});
+};
 
 nbt.Root.Add(numbers);
 nbt.Root.Add(texts);

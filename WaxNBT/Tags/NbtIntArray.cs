@@ -11,6 +11,9 @@ public class NbtIntArray : NbtTag
         Name = name;
         Data = data;
     }
+    
+    public static implicit operator NbtIntArray(int[] data) => new(data);
+    public static implicit operator int[](NbtIntArray tag) => tag.Data;
 
     public static NbtIntArray FromReader(NbtReader reader, bool readName = true)
     {
