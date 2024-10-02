@@ -29,7 +29,7 @@ public class NbtList : NbtTag, IEnumerable<NbtTag>
 
     internal override void SerializeValue(ref NbtWriter writer)
     {
-        writer.Write(_data[0].GetType());
+        writer.Write(_data.Count == 0 ? NbtTagType.List : _data[0].GetType());
         writer.Write(_data.Count);
         foreach (var tag in _data) tag.SerializeValue(ref writer);
     }
