@@ -17,8 +17,8 @@ public class NbtShort : NbtTag
 
     public static NbtShort FromReader(NbtReader reader, bool readName = true)
     {
-        string? name = readName ? reader.ReadString() : null;
-        short value = reader.ReadShort();
+        var name = readName ? reader.ReadString() : null;
+        var value = reader.ReadShort();
 
         return new NbtShort(name, value);
     }

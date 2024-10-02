@@ -17,8 +17,8 @@ public class NbtDouble : NbtTag
 
     public static NbtDouble FromReader(NbtReader reader, bool readName = true)
     {
-        string? name = readName ? reader.ReadString() : null;
-        double value = reader.ReadDouble();
+        var name = readName ? reader.ReadString() : null;
+        var value = reader.ReadDouble();
 
         return new NbtDouble(name, value);
     }

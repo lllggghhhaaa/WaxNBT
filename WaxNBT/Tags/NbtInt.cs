@@ -17,8 +17,8 @@ public class NbtInt : NbtTag
 
     public static NbtInt FromReader(NbtReader reader, bool readName = true)
     {
-        string? name = readName ? reader.ReadString() : null;
-        int value = reader.ReadInt();
+        var name = readName ? reader.ReadString() : null;
+        var value = reader.ReadInt();
 
         return new NbtInt(name, value);
     }

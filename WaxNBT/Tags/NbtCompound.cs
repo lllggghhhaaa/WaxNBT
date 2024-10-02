@@ -2,7 +2,7 @@ namespace WaxNBT.Tags;
 
 public class NbtCompound : NbtTag
 {
-    public List<NbtTag> Children = new();
+    public List<NbtTag> Children = [];
     
     public NbtCompound(string? name = null) => Name = name;
 

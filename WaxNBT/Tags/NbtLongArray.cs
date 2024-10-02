@@ -17,12 +17,12 @@ public class NbtLongArray : NbtTag
     
     public static NbtLongArray FromReader(NbtReader reader, bool readName = true)
     {
-        string? name = readName ? reader.ReadString() : null;
-        int lenght = reader.ReadInt();
+        var name = readName ? reader.ReadString() : null;
+        var lenght = reader.ReadInt();
 
-        long[] data = new long[lenght];
+        var data = new long[lenght];
 
-        for (int i = 0; i < lenght; i++)
+        for (var i = 0; i < lenght; i++)
             data[i] = reader.ReadLong();
 
         return new NbtLongArray(name, data);
@@ -31,7 +31,7 @@ public class NbtLongArray : NbtTag
     internal override void SerializeValue(ref NbtWriter writer)
     {
         writer.Write(Data.Length);
-        foreach (long i in Data) writer.Write(i);
+        foreach (var i in Data) writer.Write(i);
     }
 
     public override NbtTagType GetType() => NbtTagType.LongArray;

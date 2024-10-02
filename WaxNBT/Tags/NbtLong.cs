@@ -17,8 +17,8 @@ public class NbtLong : NbtTag
 
     public static NbtLong FromReader(NbtReader reader, bool readName = true)
     {
-        string? name = readName ? reader.ReadString() : null;
-        long value = reader.ReadLong();
+        var name = readName ? reader.ReadString() : null;
+        var value = reader.ReadLong();
 
         return new NbtLong(name, value);
     }

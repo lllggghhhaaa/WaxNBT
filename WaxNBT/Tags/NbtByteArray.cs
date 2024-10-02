@@ -17,9 +17,9 @@ public class NbtByteArray : NbtTag
 
     public static NbtByteArray FromReader(NbtReader reader, bool readName = true)
     {
-        string? name = readName ? reader.ReadString() : null;
-        int lenght = reader.ReadInt();
-        byte[] data = reader.ReadArray(lenght);
+        var name = readName ? reader.ReadString() : null;
+        var lenght = reader.ReadInt();
+        var data = reader.ReadArray(lenght);
 
         return new NbtByteArray(name, data);
     }

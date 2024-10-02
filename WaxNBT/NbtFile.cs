@@ -2,12 +2,10 @@ using WaxNBT.Tags;
 
 namespace WaxNBT;
 
-public class NbtFile
+public class NbtFile(string rootName = "")
 {
     private NbtWriter _writer = new();
-    public NbtCompound Root;
-
-    public NbtFile(string rootName = "") => Root = new NbtCompound(rootName);
+    public NbtCompound Root = new(rootName);
 
     public static NbtFile Parse(Stream stream) => Parse(new NbtReader(stream));
 
@@ -18,8 +16,8 @@ public class NbtFile
     public Stream Serialize()
     {
         Root.Serialize(ref _writer);
-        
-        Stream stream = _writer.GetStream();
+
+        var stream = _writer.GetStream();
         stream.Position = 0;
 
         return stream;

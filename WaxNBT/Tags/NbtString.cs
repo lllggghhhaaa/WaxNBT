@@ -17,8 +17,8 @@ public class NbtString : NbtTag
 
     public static NbtString FromReader(NbtReader reader, bool readName = true)
     {
-        string? name = readName ? reader.ReadString() : null;
-        string value = reader.ReadString();
+        var name = readName ? reader.ReadString() : null;
+        var value = reader.ReadString();
 
         return new NbtString(name, value);
     }

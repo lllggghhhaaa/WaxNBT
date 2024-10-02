@@ -1,26 +1,29 @@
 ﻿using WaxNBT;
 using WaxNBT.Tags;
 
-NbtFile nbt = new NbtFile();
+var nbt = new NbtFile();
 
-NbtCompound numbers = new NbtCompound("numbers");
-NbtCompound texts = new NbtCompound("texts");
-NbtCompound arrays = new NbtCompound("arrays");
+var numbers = new NbtCompound("numbers");
+var texts = new NbtCompound("texts");
+var arrays = new NbtCompound("arrays");
 
-numbers.Add(new NbtByte("byte", 8));
-numbers.Add(new NbtShort("short", 16));
-numbers.Add(new NbtInt("int", 32));
-numbers.Add(new NbtLong("long", 64));
-numbers.Add(new NbtFloat("float", 32.1f));
-numbers.Add(new NbtDouble("double", 64.2d));
+numbers
+    .Add(new NbtByte("byte", 8))
+    .Add(new NbtShort("short", 16))
+    .Add(new NbtInt("int", 32))
+    .Add(new NbtLong("long", 64))
+    .Add(new NbtFloat("float", 32.1f))
+    .Add(new NbtDouble("double", 64.2d));
 
-texts.Add(new NbtString("first", "ceira"));
-texts.Add(new NbtString("second", "pura"));
-texts.Add(new NbtString("third", "sinas"));
+texts
+    .Add(new NbtString("first", "ceira"))
+    .Add(new NbtString("second", "pura"))
+    .Add(new NbtString("third", "sinas"));
 
-arrays.Add(new NbtByteArray("bytes", new byte[] { 9, 99 }));
-arrays.Add(new NbtIntArray("ints", new[] { 9, 99, 999, 9999 }));
-arrays.Add(new NbtLongArray("longs", new long[] { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999 }));
+arrays
+    .Add(new NbtByteArray("bytes", "\tc"u8.ToArray()))
+    .Add(new NbtIntArray("ints", new[] { 9, 99, 999, 9999 }))
+    .Add(new NbtLongArray("longs", new long[] { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999 }));
 
 var list = new NbtList
 {
@@ -32,22 +35,24 @@ var list = new NbtList
     new NbtString("ceira")
 };
 
-nbt.Root.Add(numbers);
-nbt.Root.Add(texts);
-nbt.Root.Add(arrays);
-nbt.Root.Add(list);
-Stream stream = nbt.Serialize();
+nbt.Root
+    .Add(numbers)
+    .Add(texts)
+    .Add(arrays)
+    .Add(list);
 
-FileStream fs = File.Create("ceira.nbt");
+var stream = nbt.Serialize();
+
+var fs = File.Create("ceira.nbt");
 stream.CopyTo(fs);
 
 stream.Close();
 fs.Close();
 
-NbtFile readFile = NbtFile.Parse(File.ReadAllBytes("ceira.nbt"));
+var readFile = NbtFile.Parse(File.ReadAllBytes("ceira.nbt"));
 
 Console.WriteLine(readFile.Root.Name);
-foreach (NbtTag child in readFile.Root.Children)
+foreach (var child in readFile.Root.Children)
 {
     Console.WriteLine(child.Name);
     Console.WriteLine(child.GetType());

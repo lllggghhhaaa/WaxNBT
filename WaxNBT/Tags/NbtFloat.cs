@@ -17,8 +17,8 @@ public class NbtFloat : NbtTag
 
     public static NbtFloat FromReader(NbtReader reader, bool readName = true)
     {
-        string? name = readName ? reader.ReadString() : null;
-        float value = reader.ReadFloat();
+        var name = readName ? reader.ReadString() : null;
+        var value = reader.ReadFloat();
 
         return new NbtFloat(name, value);
     }
