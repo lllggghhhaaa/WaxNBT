@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaxNBT.Examples", "WaxNBT.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaxNBT.Tests", "WaxNBT.Tests\WaxNBT.Tests.csproj", "{578F29C3-1E16-4EFD-94CF-B6B2B611E764}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaxNBT.Benchmarks", "WaxNBT.Benchmarks\WaxNBT.Benchmarks.csproj", "{3AB742BB-9318-4926-A2CD-40BECA2021E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{578F29C3-1E16-4EFD-94CF-B6B2B611E764}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{578F29C3-1E16-4EFD-94CF-B6B2B611E764}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{578F29C3-1E16-4EFD-94CF-B6B2B611E764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB742BB-9318-4926-A2CD-40BECA2021E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB742BB-9318-4926-A2CD-40BECA2021E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB742BB-9318-4926-A2CD-40BECA2021E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB742BB-9318-4926-A2CD-40BECA2021E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

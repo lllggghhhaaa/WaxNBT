@@ -1,12 +1,14 @@
+using System.Buffers;
+
 namespace WaxNBT.Tests;
 
 public class NbtReaderTests
 {
-    private NbtReader _reader;
-    
-    public NbtReaderTests()
+    public NbtReader CreateReader()
     {
-        NbtWriter writer = new NbtWriter();
+        var buffer = new ArrayBufferWriter<byte>();
+        
+        NbtWriter writer = new NbtWriter(buffer);
         writer.Write(NbtTagType.Int);
         writer.Write((byte)2);
         writer.Write(new byte[] { 1, 2, 3, 4 });
@@ -17,16 +19,14 @@ public class NbtReaderTests
         writer.Write((short)2);
         writer.Write("Ceira");
 
-        Stream stream = writer.GetStream();
-        stream.Position = 0;
-
-        _reader = new NbtReader(stream);
+        return new NbtReader(buffer.WrittenSpan);
     }
     
     [Fact]
     public void TestTagType()
     {
-        NbtTagType tagType = _reader.ReadTagType();
+        var reader = CreateReader();
+        NbtTagType tagType = reader.ReadTagType();
         
         Assert.Equal(NbtTagType.Int, tagType);
     }
@@ -34,8 +34,9 @@ public class NbtReaderTests
     [Fact]
     public void TestByte()
     {
-        _reader.Skip(1);
-        byte result = _reader.ReadByte();
+        var reader = CreateReader();
+        reader.Skip(1);
+        byte result = reader.ReadByte();
         
         Assert.Equal((byte)2, result);
     }
@@ -43,8 +44,9 @@ public class NbtReaderTests
     [Fact]
     public void TestByteArray()
     {
-        _reader.Skip(2);
-        byte[] result = _reader.ReadArray(4);
+        var reader = CreateReader();
+        reader.Skip(2);
+        byte[] result = reader.ReadArray(4);
         
         Assert.Equal(new byte[] { 1, 2, 3, 4 }, result);
     }
@@ -52,8 +54,9 @@ public class NbtReaderTests
     [Fact]
     public void TestDouble()
     {
-        _reader.Skip(6);
-        double result = _reader.ReadDouble();
+        var reader = CreateReader();
+        reader.Skip(6);
+        double result = reader.ReadDouble();
         
         Assert.Equal(8.2d, result);
     }
@@ -61,8 +64,9 @@ public class NbtReaderTests
     [Fact]
     public void TestFloat()
     {
-        _reader.Skip(14);
-        float result = _reader.ReadFloat();
+        var reader = CreateReader();
+        reader.Skip(14);
+        float result = reader.ReadFloat();
         
         Assert.Equal(4.1f, result);
     }
@@ -70,8 +74,9 @@ public class NbtReaderTests
     [Fact]
     public void TestInt()
     {
-        _reader.Skip(18);
-        int result = _reader.ReadInt();
+        var reader = CreateReader();
+        reader.Skip(18);
+        int result = reader.ReadInt();
         
         Assert.Equal(4, result);
     }
@@ -79,8 +84,9 @@ public class NbtReaderTests
     [Fact]
     public void TestLong()
     {
-        _reader.Skip(22);
-        long result = _reader.ReadLong();
+        var reader = CreateReader();
+        reader.Skip(22);
+        long result = reader.ReadLong();
         
         Assert.Equal(8, result);
     }
@@ -88,8 +94,9 @@ public class NbtReaderTests
     [Fact]
     public void TestShort()
     {
-        _reader.Skip(30);
-        short result = _reader.ReadShort();
+        var reader = CreateReader();
+        reader.Skip(30);
+        short result = reader.ReadShort();
         
         Assert.Equal((short)2, result);
     }
@@ -97,8 +104,9 @@ public class NbtReaderTests
     [Fact]
     public void TestString()
     {
-        _reader.Skip(32);
-        string result = _reader.ReadString();
+        var reader = CreateReader();
+        reader.Skip(32);
+        string result = reader.ReadString();
         
         Assert.Equal("Ceira", result);
     }

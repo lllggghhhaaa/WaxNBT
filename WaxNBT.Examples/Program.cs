@@ -41,7 +41,7 @@ nbt.Root
     .Add(arrays)
     .Add(list);
 
-var stream = nbt.Serialize();
+var stream = nbt.SerializeToStream();
 
 var fs = File.Create("ceira.nbt");
 stream.CopyTo(fs);

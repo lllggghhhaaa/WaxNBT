@@ -1,28 +1,37 @@
-using System.Buffers.Binary;
+using System.Buffers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using WaxNBT.Tags;
 
 namespace WaxNBT;
 
-public class NbtReader
+public ref struct NbtReader
 {
     public Encoding StringEncoder = Encoding.UTF8;
 
-    private readonly byte[] _data;
-    private int _position;
+    private SequenceReader<byte> _reader;
 
-    public NbtReader(Stream stream)
+    public NbtReader(ReadOnlySequence<byte> sequence, Encoding? encoding = null)
+    {
+        _reader = new SequenceReader<byte>(sequence);
+        StringEncoder = encoding ?? Encoding.UTF8;
+    }
+
+    public NbtReader(ReadOnlySpan<byte> data, Encoding? encoding = null)
+        : this(new ReadOnlySequence<byte>(data.ToArray()), encoding) { }
+
+    public static NbtReader FromStream(Stream stream, Encoding? encoding = null)
     {
         using var ms = new MemoryStream();
         stream.CopyTo(ms);
-
-        _data = ms.ToArray();
+        var seq = new ReadOnlySequence<byte>(ms.GetBuffer(), 0, (int)ms.Length);
+        return new NbtReader(seq, encoding);
     }
 
-    public NbtReader(byte[] data) => _data = data;
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Skip(int length) => _reader.Advance(length);
 
-    public void Skip(int length) => _position += length;
-    
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public NbtTagType ReadTagType() => (NbtTagType)ReadByte();
 
     public NbtTag ReadTag(NbtTagType? type = null, bool readName = true)
@@ -49,62 +58,78 @@ public class NbtReader
         };
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public byte ReadByte()
     {
-        var data = _data[_position];
-        _position++;
+        _reader.TryRead(out byte value);
+        return value;
+    }
 
-        return data;
+    public void ReadBytes(Span<byte> destination)
+    {
+        _reader.TryCopyTo(destination);
+        _reader.Advance(destination.Length);
     }
 
     public byte[] ReadArray(int length)
     {
-        var data = _data[_position..(_position + length)];
-        _position += length;
-        
-        return data;
+        var result = new byte[length];
+        _reader.TryCopyTo(result);
+        _reader.Advance(length);
+        return result;
     }
-    
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public short ReadShort()
     {
-        var data = ReadArray(2);
-        return BinaryPrimitives.ReadInt16BigEndian(data);
+        _reader.TryReadBigEndian(out short value);
+        return value;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int ReadInt()
     {
-        var data = ReadArray(4);
-        return BinaryPrimitives.ReadInt32BigEndian(data);
+        _reader.TryReadBigEndian(out int value);
+        return value;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public long ReadLong()
     {
-        var data = ReadArray(8);
-        return BinaryPrimitives.ReadInt64BigEndian(data);
+        _reader.TryReadBigEndian(out long value);
+        return value;
     }
-    
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public float ReadFloat()
     {
-        var data = ReadArray(4);
-        
-        Array.Reverse(data);
-        return BitConverter.ToSingle(data);
+        _reader.TryReadBigEndian(out int intValue);
+        return BitConverter.Int32BitsToSingle(intValue);
     }
-    
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public double ReadDouble()
     {
-        var data = ReadArray(8);
-        
-        Array.Reverse(data);
-        return BitConverter.ToDouble(data);
+        _reader.TryReadBigEndian(out long longValue);
+        return BitConverter.Int64BitsToDouble(longValue);
     }
 
     public string ReadString()
     {
         var length = ReadShort();
 
-        var data = ReadArray(length);
+        // Fast-path: decode directly from the current unread span if contiguous
+        if (_reader.UnreadSpan.Length >= length)
+        {
+            var span = _reader.UnreadSpan.Slice(0, length);
+            _reader.Advance(length);
+            return StringEncoder.GetString(span);
+        }
 
-        return StringEncoder.GetString(data);
+        // Fallback: copy to a small stack buffer or a temporary array, then decode
+        Span<byte> temp = length <= 256 ? stackalloc byte[length] : new byte[length];
+        _reader.TryCopyTo(temp);
+        _reader.Advance(length);
+        return StringEncoder.GetString(temp);
     }
 }

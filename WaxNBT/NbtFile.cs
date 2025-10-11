@@ -1,25 +1,47 @@
+using System.Buffers;
 using WaxNBT.Tags;
 
 namespace WaxNBT;
 
-public class NbtFile(string rootName = "")
+public class NbtFile
 {
-    private NbtWriter _writer = new();
-    public NbtCompound Root = new(rootName);
+    public NbtCompound Root { get; set; }
 
-    public static NbtFile Parse(Stream stream) => Parse(new NbtReader(stream));
-
-    public static NbtFile Parse(byte[] data) => Parse(new NbtReader(data));
-
-    public static NbtFile Parse(NbtReader reader) => new() { Root = (NbtCompound)reader.ReadTag() };
-
-    public Stream Serialize()
+    public NbtFile(string rootName = "")
     {
-        Root.Serialize(ref _writer);
+        Root = new NbtCompound(rootName);
+    }
 
-        var stream = _writer.GetStream();
-        stream.Position = 0;
+    public static NbtFile Parse(Stream stream)
+    {
+        var reader = NbtReader.FromStream(stream);
+        return new NbtFile { Root = (NbtCompound)reader.ReadTag() };
+    }
 
-        return stream;
+    public static NbtFile Parse(byte[] data)
+    {
+        var reader = new NbtReader(data);
+        return new NbtFile { Root = (NbtCompound)reader.ReadTag() };
+    }
+
+    public static NbtFile Parse(NbtReader reader)
+    {
+        return new NbtFile { Root = (NbtCompound)reader.ReadTag() };
+    }
+
+    public ReadOnlyMemory<byte> Serialize()
+    {
+        var buffer = new ArrayBufferWriter<byte>();
+        var writer = new NbtWriter(buffer);
+
+        Root.Serialize(ref writer);
+
+        return buffer.WrittenMemory;
+    }
+
+    public Stream SerializeToStream()
+    {
+        var data = Serialize();
+        return new MemoryStream(data.ToArray());
     }
 }
